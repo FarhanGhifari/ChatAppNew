@@ -46,8 +46,8 @@ return () => unsub();
 				fontSize: 18,
 			  },
 			  headerRight: () => (
-				<TouchableOpacity onPress={() => auth().signOut()} style={{ marginRight: 15, padding: 5 }}>
-				  <Icon name="log-out-outline" size={24} color="#ff3b30" />
+				<TouchableOpacity onPress={() => auth().signOut()} style={{ marginRight: -9, padding: 5 }}>
+				  <Icon name="log-out-outline" size={35} color="#ff3b30" />
 				</TouchableOpacity>
 			  ),
 			}}

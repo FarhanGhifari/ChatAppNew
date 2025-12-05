@@ -92,21 +92,23 @@ export default function LoginScreen({ navigation }: Props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor: "#fafafa",
     padding: 20,
+    paddingTop: 60,
   },
   logoImage: {
-    width: 100,
-    height: 100,
-    marginBottom: 16,
+    width: 145,
+    height: 145,
+    marginBottom: 2,
   },
   appName: {
-    fontSize: 32,
+    fontSize: 50,
     fontWeight: "bold",
-    color: "#262626",
-    marginBottom: 30,
+    color: "#4ba7afff",
+    marginBottom: 25,
+    marginTop: -10,
   },
   formContainer: {
     width: "100%",
