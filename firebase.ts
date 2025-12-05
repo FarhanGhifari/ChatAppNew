@@ -5,19 +5,20 @@ import firestore from '@react-native-firebase/firestore';
 // Firebase sudah otomatis terinisialisasi melalui google-services.json (Android)
 // dan GoogleService-Info.plist (iOS)
 export const firebaseConfig = {
-  apiKey: "AIzaSyBCxyIXnmLVwN2vmVcwa8KgaMnJ5r249Ao",
-  authDomain: "chatappnew-96231.firebaseapp.com",
-  projectId: "chatappnew-96231",
-  storageBucket: "chatappnew-96231.firebasestorage.app",
-  messagingSenderId: "434945617744",
-  appId: "1:434945617744:web:f9f429c469d98f5b894655",
-  measurementId: "G-6VS5XT0WKV"
+  apiKey: "AIzaSyDZl3-DtPy6RyDHLE-VsMTimNQjG95V7tc",
+  authDomain: "chatappnew-581a3.firebaseapp.com",
+  projectId: "chatappnew-581a3",
+  storageBucket: "chatappnew-581a3.firebasestorage.app",
+  messagingSenderId: "874368505292",
+  appId: "1:874368505292:web:caff4f9cdd523c381f3969",
+  measurementId: "G-LF355DCZGN"
 };
 
 export { auth, firestore };
 
 // Firestore Collections
 export const messagesCollection = firestore().collection('messages');
+export const usersCollection = firestore().collection('users');
 
 // Helper functions untuk authentication
 export const signIn = async (email: string, password: string) => {
@@ -30,13 +31,36 @@ export const signIn = async (email: string, password: string) => {
   }
 };
 
-export const signUp = async (email: string, password: string) => {
+export const signUp = async (email: string, password: string, username: string) => {
   try {
     const userCredential = await auth().createUserWithEmailAndPassword(email, password);
-    return userCredential.user;
+    const user = userCredential.user;
+    
+    // Save username to Firestore
+    await usersCollection.doc(user.uid).set({
+      username: username,
+      email: email,
+      createdAt: firestore.FieldValue.serverTimestamp(),
+    });
+    
+    return user;
   } catch (error) {
     console.error('Error signing up:', error);
     throw error;
+  }
+};
+
+// Helper to get username by uid
+export const getUsernameByUid = async (uid: string): Promise<string> => {
+  try {
+    const doc = await usersCollection.doc(uid).get();
+    if (doc.exists) {
+      return doc.data()?.username || 'Unknown';
+    }
+    return 'Unknown';
+  } catch (error) {
+    console.error('Error getting username:', error);
+    return 'Unknown';
   }
 };
 
